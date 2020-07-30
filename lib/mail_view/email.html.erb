@@ -81,7 +81,12 @@
     <% unless mail.attachments.nil? || mail.attachments.empty? %>
       <dt>Attachments:</dt>
       <dd>
-        <%= Rack::Utils.escape_html mail.attachments.map { |a| a.respond_to?(:original_filename) ? a.original_filename : a.filename }.inspect %>
+        <% mail.attachments.each do |a| %>
+          <% filename = a.respond_to?(:original_filename) ? a.original_filename : a.filename %>
+          <a href="data:application/octet-stream;charset=utf-8;base64,<%= Base64.encode64(a.body.to_s) %>" download="<%= filename %>">
+            <%= filename %>
+          </a>
+        <% end %>
       </dd>
     <% end %>
 

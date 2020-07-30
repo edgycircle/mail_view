@@ -1,5 +1,6 @@
 require 'erb'
 require 'tilt'
+require 'base64'
 
 require 'rack/mime'
 require 'rack/request'
